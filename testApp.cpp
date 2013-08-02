@@ -26,7 +26,6 @@ void testApp::setup(){
 		if (arcPos.y == 0) ofLog(OF_LOG_NOTICE, ofToString((int) arcPos.y));
 		arcList[i].move(arcPos);
 	}
-
 }
 
 //--------------------------------------------------------------
