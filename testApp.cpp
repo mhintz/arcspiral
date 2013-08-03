@@ -27,10 +27,10 @@ void testApp::setup(){
 		arcPos.x = (i % xArcs) * arcDiam + (arcRad * (i % 2));
 		arcPos.y = floor(i / xArcs) * arcDiam + (arcRad * (i % 2));
 
-		xProx = abs(arcPos.x - (width / 2));
-		yProx = abs(arcPos.y - (height / 2));
+		xProx = abs(arcPos.x - (width / 2)) / arcDiam;
+		yProx = abs(arcPos.y - (height / 2)) / arcDiam;
 
-		arcList[i].rot = (xProx + yProx) * (PI * 1 / 9);
+		arcList[i].rot = (xProx + yProx) * (PI * 1 / 3);
 
 		arcList[i].move(arcPos);
 	}

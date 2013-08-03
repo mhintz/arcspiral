@@ -1,10 +1,10 @@
 #include "Arc.h"
 
 int Arc::rad = 20;
-int Arc::overlap = 6;
+int Arc::overlap = 8;
 
 float Arc::angle = TWO_PI / 2;
-float Arc::rotVel = TWO_PI / 180;
+float Arc::rotVel = TWO_PI / 90;
 
 int Arc::thickness = 10;
 
