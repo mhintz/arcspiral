@@ -1,21 +1,25 @@
 #include "Arc.h"
 
 int Arc::rad = 20;
-float Arc::angle = TWO_PI / 4;
-float Arc::rotVel = TWO_PI / 360;
+int Arc::overlap = 6;
+
+float Arc::angle = TWO_PI / 2;
+float Arc::rotVel = TWO_PI / 180;
+
 int Arc::thickness = 10;
+
+float Arc::color = 0xffffff;
+int Arc::subdivisions = 40;
 
 Arc::Arc(){
 	rot = 0;
 	pos.set(0);
-	color = 0xffffff;
+	increment = angle / subdivisions;
 }
 
 void Arc::update(){
 	rot += rotVel;
-	if (rot > TWO_PI) {
-		rot = 0;
-	}
+	rot = fmod(rot, TWO_PI);
 }
 
 void Arc::move(ofVec3f newPos){
@@ -23,14 +27,11 @@ void Arc::move(ofVec3f newPos){
 }
 
 void Arc::draw(){
-	float rotDeg = (rot / TWO_PI) * 360;
-	float angleDeg = (angle / TWO_PI) * 360;
-
-	ofSetHexColor(color);
-
-	ofBeginShape();
-	ofCurveVertex(pos.x + (cos(rot) * rad), pos.y + (sin(rot) * rad));
-	ofCurveVertex(pos.x + (cos(rot + (angle / 2)) * rad), pos.y + (sin(rot + (angle / 2)) * rad));
-	ofCurveVertex(pos.x + (cos(rot + angle) * rad), pos.y + (sin(rot + angle) * rad));
-	ofEndShape();
+	shape.clear();
+	float rotationExtent;
+	for (int i = 0; i < subdivisions; ++i) {
+		rotationExtent = rot + (increment * i);
+		shape.addVertex(pos.x + (cos(rotationExtent) * rad), pos.y + (sin(rotationExtent) * rad));
+	}
+	shape.draw();
 }

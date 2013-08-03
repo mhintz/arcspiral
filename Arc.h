@@ -6,15 +6,18 @@
 class Arc{
 	public:
 		static int rad;
+		static int overlap;
 		static float angle;
 		static int thickness;
 		static float rotVel;
+		static int subdivisions;
+		static float color;
 
-		float rot;
+		double rot;
 		ofVec3f pos;
-		float color;
+		float increment;
 
-		ofPath path;
+		ofPolyline shape;
 
 		Arc();
 
