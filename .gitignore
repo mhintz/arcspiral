@@ -1,0 +1,39 @@
+*~
+.DS_Store
+*.app*
+
+#OSX
+*.swp
+*~.nib
+# Thumbnails
+._*
+
+#OF-specific ignores
+openFrameworks.a
+openFrameworksDebug.a
+openFrameworksUniversal.a
+
+# Some general ignore patterns
+
+build/
+obj/
+*.o
+Debug*/
+Release*/
+*.mode*
+*.app/
+*.pyc
+.svn/
+
+#xcode specific
+build/*
+*.pbxuser
+*.mode2v3
+*.mode1v3
+*.perspective
+*.perspectivev3
+*~.nib
+#ignore private workspace stuff added by Xcode4
+xcuserdata
+xcshareddata
+project.xcworkspace
