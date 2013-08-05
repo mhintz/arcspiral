@@ -16,21 +16,20 @@ void testApp::setup(){
 	numArcs = xArcs * yArcs;
 
 	arcList.assign(numArcs, Arc());
+	ofVec3f center(width / 2, height / 2, 0);
 
-	int posInLine;
+	rotIncrement = PI * 1 / 1;
+
 	ofVec3f arcPos;
-
-	int xProx;
-	int yProx;
+	double dist;
 
 	for (int i = 0; i < numArcs; ++i) {
-		arcPos.x = (i % xArcs) * arcDiam + (arcRad * (i % 2));
-		arcPos.y = floor(i / xArcs) * arcDiam + (arcRad * (i % 2));
+		arcPos.x = (i % xArcs) * arcDiam + (arcRad * ((int) floor(i / xArcs) % 2));
+		arcPos.y = floor(i / xArcs) * arcDiam + arcRad;
 
-		xProx = abs(arcPos.x - (width / 2)) / arcDiam;
-		yProx = abs(arcPos.y - (height / 2)) / arcDiam;
+		dist = sqrt(pow(arcPos.x - center.x, 2) + pow(arcPos.y - center.y, 2));
 
-		arcList[i].rot = (xProx + yProx) * (PI * 1 / 3);
+		arcList[i].rot = dist * rotIncrement;
 
 		arcList[i].move(arcPos);
 	}
@@ -66,7 +65,22 @@ void testApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void testApp::mouseMoved(int x, int y){
-
+	if (y > 0) {
+		float newRotIncrement = PI * 1 / ceil(y / 10);
+		if (newRotIncrement != rotIncrement) {
+			rotIncrement = newRotIncrement;
+			float arcX;
+			float arcY;
+			double dist;
+			ofVec3f center(ofGetWidth() / 2, ofGetHeight() / 2, 0);
+			for (int i = 0; i < numArcs; ++i) {
+				arcX = arcList[i].pos.x - center.x;
+				arcY = arcList[i].pos.y - center.y;
+				dist = sqrt( pow(arcX, 2) + pow(arcY, 2) );
+				arcList[i].rot = dist * rotIncrement;
+			}
+		}
+	}
 }
 
 //--------------------------------------------------------------

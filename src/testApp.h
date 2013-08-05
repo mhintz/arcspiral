@@ -7,6 +7,7 @@
 class testApp : public ofBaseApp{
 	public:
 		int numArcs;
+		float rotIncrement;
 		vector<Arc> arcList;
 
 		void setup();

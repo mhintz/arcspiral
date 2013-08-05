@@ -6,6 +6,7 @@ int Arc::overlap = 8;
 float Arc::angle = TWO_PI / 2;
 float Arc::rotVel = TWO_PI / 90;
 
+// not currently being used
 int Arc::thickness = 10;
 
 float Arc::color = 0xffffff;

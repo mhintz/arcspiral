@@ -8,10 +8,10 @@ class Arc{
 		static int rad;
 		static int overlap;
 		static float angle;
-		static int thickness;
 		static float rotVel;
-		static int subdivisions;
+		static int thickness;
 		static float color;
+		static int subdivisions;
 
 		double rot;
 		ofVec3f pos;
