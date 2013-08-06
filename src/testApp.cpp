@@ -19,13 +19,16 @@ void testApp::setup(){
 	ofVec3f center(width / 2, height / 2, 0);
 
 	rotIncrement = PI * 1 / 1;
+	hOffset = 0.5;
 
 	ofVec3f arcPos;
 	double dist;
+	int vPos;
 
 	for (int i = 0; i < numArcs; ++i) {
-		arcPos.x = (i % xArcs) * arcDiam + (arcRad * ((int) floor(i / xArcs) % 2));
-		arcPos.y = floor(i / xArcs) * arcDiam + arcRad;
+		vPos = (int) floor(i / xArcs);
+		arcPos.x = (i % xArcs) * arcDiam + ((hOffset * arcDiam) * (vPos % 2));
+		arcPos.y = (vPos * arcDiam) + arcDiam;
 
 		dist = sqrt(pow(arcPos.x - center.x, 2) + pow(arcPos.y - center.y, 2));
 
@@ -65,18 +68,25 @@ void testApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void testApp::mouseMoved(int x, int y){
-	if (y > 0) {
-		float newRotIncrement = PI * 1 / ceil(y / 10);
-		if (newRotIncrement != rotIncrement) {
+	if (y > 0 && x > 0) {
+		float newRotIncrement = PI * 1 / ceil((float) y / 10);
+		float newHOffset = ceil((float) x / (float) ofGetWidth() * 10) / 10;
+		if (newRotIncrement != rotIncrement || newHOffset != hOffset) {
 			rotIncrement = newRotIncrement;
-			float arcX;
-			float arcY;
+			hOffset = newHOffset;
+			float arcDiam = 2 * (Arc::rad - Arc::overlap);
+			int xArcs = floor(ofGetHeight() / arcDiam);
+			int vPos;
+			float arcXDist;
+			float arcYDist;
 			double dist;
 			ofVec3f center(ofGetWidth() / 2, ofGetHeight() / 2, 0);
 			for (int i = 0; i < numArcs; ++i) {
-				arcX = arcList[i].pos.x - center.x;
-				arcY = arcList[i].pos.y - center.y;
-				dist = sqrt( pow(arcX, 2) + pow(arcY, 2) );
+				vPos = (int) floor(i / xArcs);
+				arcList[i].pos.x = (i % xArcs) * arcDiam + ((hOffset * arcDiam) * (vPos % 2));
+				arcXDist = arcList[i].pos.x - center.x;
+				arcYDist = arcList[i].pos.y - center.y;
+				dist = sqrt( pow(arcXDist, 2) + pow(arcYDist, 2) );
 				arcList[i].rot = dist * rotIncrement;
 			}
 		}
